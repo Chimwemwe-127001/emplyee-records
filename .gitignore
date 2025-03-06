@@ -1,0 +1,12 @@
+# Folders
+.next/
+node_modules/
+public/
+script/
+
+
+# Files
+.env.local
+.DS_Store
+.package-lock.json
+.next-env.d.ts
