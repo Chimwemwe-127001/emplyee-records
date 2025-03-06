@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import { ChevronDown, Grid, Search, Trash2, User, CreditCard, ChevronLeft, ChevronRight, Edit, X } from "lucide-react";
+import { ChevronDown, LayoutGrid, Search, Trash2, Users, CreditCard, ChevronLeft, ChevronRight, Edit, X, MessageCircle } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -43,8 +43,8 @@ export default function EmployeeDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  // State for toggling the dropdown
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedIcon, setSelectedIcon] = useState<string | null>("Users"); // Track selected icon
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -225,15 +225,50 @@ export default function EmployeeDashboard() {
     <div className="flex min-h-screen bg-[#f6f8f8]">
       {/* Sidebar - Fixed, Starting Below Header with Spaced Icons */}
       <div className="fixed top-16 left-0 w-16 h-[calc(100vh-64px)] bg-white border-r border-[#6A7E8A1A] flex flex-col items-center justify-center gap-9 z-100">
-        <div className="p-2 hover:bg-[#f6f8f8] rounded-md cursor-pointer">
-          <Grid className="text-[#6a7e8a]" size={23} />
-        </div>
-        <div className="p-2 bg-[#f6f8f8] rounded-md cursor-pointer">
-          <User className="text-[#2bda53]" size={23} />
-        </div>
-        <div className="p-2 hover:bg-[#f6f8f8] rounded-md cursor-pointer">
-          <CreditCard className="text-[#6a7e8a]" size={23} />
-        </div>
+        {[
+          { id: "LayoutGrid", icon: LayoutGrid, path: "/dashboard" },
+          { id: "Users", icon: Users, path: "/employees" },
+          { id: "CreditCard", icon: CreditCard, path: "/payments" },
+        ].map(({ id, icon: Icon, path }) => (
+          <div
+            key={id}
+            className={`p-2 w-full flex justify-center items-center rounded-md cursor-pointer transition-all duration-200 ${
+              selectedIcon === id
+                ? "border-l-4 border-[#2bda53]"
+                : "hover:bg-[#f6f8f8] hover:border-l-4 hover:border-[#2bda53]"
+            }`}
+            onClick={() => {
+              setSelectedIcon(id);
+              router.push(path);
+            }}
+          >
+            {/* Special rendering for Users icon to include a speech bubble */}
+            {id === "Users" ? (
+              <div className="relative">
+                <Icon
+                  className={`${
+                    selectedIcon === id ? "text-[#2bda53]" : "text-[#6a7e8a]"
+                  } transition-colors`}
+                  size={22}
+                />
+                {/* Add a small speech bubble when selected */}
+                {selectedIcon === id && (
+                  <MessageCircle
+                    className="absolute -top-1 -right-1 text-[#2bda53] transform scale-50"
+                    size={12}
+                  />
+                )}
+              </div>
+            ) : (
+              <Icon
+                className={`${
+                  selectedIcon === id ? "text-[#2bda53]" : "text-[#6a7e8a]"
+                } transition-colors`}
+                size={22}
+              />
+            )}
+          </div>
+        ))}
       </div>
 
       {/* Main Wrapper */}
