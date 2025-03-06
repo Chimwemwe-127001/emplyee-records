@@ -435,7 +435,7 @@ export default function EmployeeDashboard() {
                       <td className="py-4 px-4 text-[#6a7e8a]">{employee.phone}</td>
                       <td className="py-4 px-4 text-[#6a7e8a]">{employee.role}</td>
                       <td className="py-4 px-4 flex gap-2">
-                        <button className="text-blue-500 hover:text-blue-700" onClick={() => openEditModal(employee)}>
+                        <button className="text-[#2bda53] hover:text-[#2bda53]-700" onClick={() => openEditModal(employee)}>
                           <Edit size={18} />
                         </button>
                         <button
