@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import { ChevronDown, LayoutGrid, Search, Trash2, Users, CreditCard, ChevronLeft, ChevronRight, Edit, X, MessageCircle } from "lucide-react";
+import { ChevronDown, ChevronsUpDown, LayoutGrid, Search, Trash2, Users, CreditCard, ChevronLeft, ChevronRight, Edit, X, MessageCircle } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -346,25 +346,55 @@ export default function EmployeeDashboard() {
           </div>
 
           <div className="bg-white rounded-md shadow-sm p-6">
-            <div className="flex gap-4 mb-6">
-              <div className="relative w-48">
-                <div className="flex items-center justify-between border border-[#d8d8d8] rounded-md px-3 py-2 text-[#6a7e8a]">
-                  <span>Change role</span>
-                  <ChevronDown size={16} />
+            <div className="flex items-center justify-between mb-6">
+              {/* Left Section: Change Role and Change Button */}
+              <div className="flex items-center gap-4">
+                <div className="relative w-48">
+                  <div className="flex items-center justify-between border border-[#d8d8d8] bg-[#f6f8f8] rounded-md px-3 py-2 text-[#6a7e8a]">
+                    <span>Change role</span>
+                    <ChevronsUpDown size={16} className="text-[#6a7e8a]" />
+                  </div>
+                </div>
+                <button className="bg-[#2bda53] text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors">
+                  Change
+                </button>
+                {/* Search Input */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Enter staff name here..."
+                    className="w-64 border border-[#d8d8d8] bg-[#f6f8f8] rounded-md px-3 py-2 pl-10 text-[#6a7e8a] focus:outline-none focus:ring-2 focus:ring-[#2bda53]"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#6a7e8a]" />
                 </div>
               </div>
-              <button className="bg-[#2bda53] text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition-colors">
-                Change
-              </button>
-              <div className="relative flex-1 max-w-md">
-                <input
-                  type="text"
-                  placeholder="Enter staff name here..."
-                  className="w-full border border-[#d8d8d8] rounded-md px-3 py-2 pl-10 text-[#6a7e8a] focus:outline-none"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#6a7e8a]" />
+
+              {/* Right Section: Pagination */}
+              <div className="flex items-center gap-4">
+                {/* Pagination */}
+                <span className="text-[#6a7e8a] text-sm">{currentPage} of {totalPages || 1}</span>
+                <div className="flex gap-1">
+                  <button
+                    className={`w-6 h-6 rounded-full bg-[#2bda53] flex items-center justify-center text-white hover:bg-opacity-90 transition-colors ${
+                      currentPage <= 1 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage <= 1}
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    className={`w-6 h-6 rounded-full bg-[#2bda53] flex items-center justify-center text-white hover:bg-opacity-90 transition-colors ${
+                      currentPage >= totalPages ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage >= totalPages}
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -372,7 +402,10 @@ export default function EmployeeDashboard() {
               <thead>
                 <tr className="border-b border-[#d8d8d8]">
                   <th className="py-3 px-4 text-left">
-                    <input type="checkbox" className="rounded border-[#d8d8d8]" />
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4 border-[#d8d8d8] bg-white checked:bg-[#2bda53] checked:border-[#2bda53] focus:ring-0 focus:outline-none"
+                    />
                   </th>
                   <th className="py-3 px-4 text-left text-[#6a7e8a] font-medium">FIRST NAME</th>
                   <th className="py-3 px-4 text-left text-[#6a7e8a] font-medium">LAST NAME</th>
@@ -389,7 +422,9 @@ export default function EmployeeDashboard() {
                       <td className="py-4 px-4">
                         <input
                           type="checkbox"
-                          className={`rounded ${selectedRows.includes(employee._id) ? "bg-[#2bda53] border-[#2bda53]" : "border-[#d8d8d8]"}`}
+                          className={`h-4 w-4 border-[#d8d8d8] bg-white checked:bg-[#2bda53] checked:border-[#2bda53] focus:ring-0 focus:outline-none ${
+                            selectedRows.includes(employee._id) ? "bg-[#2bda53] border-[#2bda53]" : ""
+                          }`}
                           checked={selectedRows.includes(employee._id)}
                           onChange={() => toggleRowSelection(employee._id)}
                         />
@@ -423,28 +458,6 @@ export default function EmployeeDashboard() {
                 )}
               </tbody>
             </table>
-
-            <div className="flex justify-end items-center mt-6 gap-2">
-              <span className="text-[#6a7e8a]">
-                {currentPage} of {totalPages || 1}
-              </span>
-              <div className="flex gap-1">
-                <button
-                  className={`w-6 h-6 rounded-full ${currentPage > 1 ? "bg-[#2bda53]" : "bg-gray-300"} flex items-center justify-center text-white`}
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                  disabled={currentPage <= 1}
-                >
-                  <ChevronLeft size={16} />
-                </button>
-                <button
-                  className={`w-6 h-6 rounded-full ${currentPage < totalPages ? "bg-[#2bda53]" : "bg-gray-300"} flex items-center justify-center text-white`}
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage >= totalPages}
-                >
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-            </div>
           </div>
         </main>
       </div>
