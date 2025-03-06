@@ -7,10 +7,11 @@ import { AtSign, Eye } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import ModelImage from "@/assets/images/Model.png";
 
 export default function SignIn() {
   const router = useRouter();
-  const searchParams = useSearchParams(); // Get query parameters
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -18,7 +19,6 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Pre-fill email from query parameter
   useEffect(() => {
     const email = searchParams.get("email");
     if (email) {
@@ -52,7 +52,6 @@ export default function SignIn() {
         throw new Error(result.error);
       }
 
-      // Check if sign-in was successful and redirect to /dashboard
       if (result?.ok) {
         console.log("Sign-in successful, redirecting to /dashboard");
         router.push("/dashboard"); // Manual redirect as a fallback
@@ -88,14 +87,15 @@ export default function SignIn() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
       {/* Left side - Placeholder */}
-      <div className="relative hidden md:block md:w-1/2 bg-gray-200">
+      <div className="relative hidden md:block md:w-2/5 bg-gray-200">
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60">
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Task_manager-KymZtqbJACZF7EmvWaCd2bYRGLO6Hg.png"
-            alt="Background"
-            layout="fill"
-            objectFit="cover"
-            className="mix-blend-overlay"
+            src={ModelImage}
+            alt="Sign Up Illustration"
+            width={743}
+            height={950}
+            className="object-cover w-full h-full"
+            priority
           />
         </div>
         <div className="relative flex flex-col justify-end h-full p-8 text-white">
@@ -115,7 +115,7 @@ export default function SignIn() {
       </div>
 
       {/* Right side - Sign in form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-8">
+      <div className="w-full md:w-3/5 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-[#013c61] mb-2">Sign in to your account</h1>

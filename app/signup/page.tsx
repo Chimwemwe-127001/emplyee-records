@@ -28,7 +28,6 @@ export default function SignUp() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic validation
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
       toast.error("All fields are required");
       return;
@@ -58,7 +57,6 @@ export default function SignUp() {
 
       toast.success("Account created successfully");
 
-      // Redirect to /signin with email as a query parameter
       router.push(`/signin?email=${encodeURIComponent(formData.email)}`);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -87,7 +85,7 @@ export default function SignUp() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
       {/* Left side - Image and text overlay */}
-      <div className="relative hidden md:block md:w-1/2 bg-gray-200">
+      <div className="relative hidden md:block md:w-2/5 bg-gray-200">
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60">
           <Image
             src={ModelImage}
@@ -115,7 +113,7 @@ export default function SignUp() {
       </div>
 
       {/* Right side - Sign up form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-8">
+      <div className="w-full md:w-3/5 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-[#013c61] mb-2">Create your free account</h1>
