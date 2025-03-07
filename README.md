@@ -173,6 +173,10 @@ This architecture provides several benefits:
 4. **Logout**:
    - Clears the session via `signOut` from NextAuth.js.
 ---
+## 🚀 Deployment
+The app is deployed on Vercel for this assessment.
+- Live URL: https://emplyee-records-git-dev-chimwemwe-127001s-projects.vercel.app/
+---
 ## 🙌 Conclusion
 
 This Employee Record Management System showcases a robust full-stack application built with Next.js, MongoDB, and NextAuth.js, meeting all assessment requirements. The code is modular, well-documented, and follows best practices, with a responsive UI aligned with the Figma design. Thank you for the opportunity to demonstrate my skills—I look forward to your feedback!
