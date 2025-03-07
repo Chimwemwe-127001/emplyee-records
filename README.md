@@ -1,5 +1,3 @@
-Below is the `README.md` file written in Markdown code format, ensuring proper syntax and structure for a GitHub repository. This version maintains the content from the previous response but formats it explicitly as code to reflect how it would appear in a `.md` file.
-
 # Employee Record Management System
 
 A full-stack web application for managing employee records with authentication, built with Next.js, MongoDB, and NextAuth.js.
