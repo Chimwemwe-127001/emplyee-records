@@ -90,7 +90,7 @@ This architecture provides several benefits:
 ### Installation
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/employee-record-app.git
+   git clone https://github.com/Chimwemwe-127001/employee-record-app.git
    cd employee-record-app
    ```
 
